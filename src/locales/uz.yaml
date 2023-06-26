@@ -1,0 +1,145 @@
+user:
+  home:
+    caption: 🏠 Asosiy menyu
+    ringtones: 🎷 Ringtonlar
+    images: 🖼 Rasmlar
+    balance: 💳 Balans
+    feedback: 📨 Fikr bildirish
+    about: ℹ️ Bot haqida
+
+  balance:
+    caption: Hisobingizda ${cost} so'm mavjud.
+    buttons:
+      pay: To'ldirish
+      withdraw: Yechib olish
+      back: ⬅️ Orqaga
+    
+    pay:
+      caption: "Botga pul quyidagi 2 ta qadam orqali amalga oshiriladi.\n\n<code>1. Ushbu karta raqamiga o'tkazmani amalga oshiring: ${cardNumber}\n2.Pul o'tkazganingizni tasdiqlash uchun chek rasmini shu yerga yuboring.</code>"
+      back: ⬅️ Orqaga
+
+    withdraw:
+      caption: "Pul yechishning qaysi usulini tanlamoqchisiz:"
+      to_card: "💳 Kartaga"
+      to_phone: "📲 Telefonga"
+      back: ⬅️ Orqaga
+
+      enter_card: "Pul chiqarmoqchi bo'lgan kartangizni kiriting.\nMasalan:\n9860 **** **** 0164\nyoki\n8600 **** **** 4327"
+      enter_phone: "Pul chiqarmoqchi bo'lgan telefon raqamingizni kiriting.\nMasalan: +99891123****"
+      status:
+        cancel: "🚫 Bekor qilish"
+        pay: "✅ To'landi"
+        
+        pending: "⌛️ Kutmoqda..."
+        payed: "✅ To'langan!"
+        cancelled: "🚫 Bekor qilindi"
+        payment_approved: "✅ Hozirgina to'lov haqidagi so'rovingiz bajarildi. Tekshirib ko'rishingiz mumkin!"
+        warn_cancelled: "⚠️ To'lov haqidagi so'rovingiz bekor qilindi. Hisobingizdan pul yechilmadi. So'rovingizdagi xatolikni bartaraf qilib, qayta yuborishingiz mumkin!"
+      method:
+        card: "💳 Karta raqam"
+        phone: "📞 Telefon raqam"
+      checkout: "${paymentMethod}: <code>${cardOrPhone}</code>\n💵 Pul miqdori: <code>${withdrawalCost}</code> so'm\n${paymentStatus}"
+      
+      withdraw_to_card:
+        caption: "💳 Balans: ${balance} сўм\n\nYechib olmoqchi bo'lgan summangizni kiriting.\nMasalan: 5000"
+        payment_received: "✅ Hisobingizdan ${withdrawalCost} so'm yechib olish haqidagi so'rovingiz adminga yetkazildi. Eng qisqa muddatda kartangizga o'tkaziladi!"
+        not_enough_money: "🚫 Balansingizda mablag' yetarli emas!"
+        error_minimal_withdraw: "🚫 Minimal pul yechish miqdori: ${minimalCost} so'm"
+        error_cost: "🚫 Misolda keltirilgandek, faqatgina sonni o'zini kiritish kerak!"
+        back: ⬅️ Orqaga
+      
+      withdraw_to_phone:
+        caption: "💳 Balans: ${balance} сўм\n\nYechib olmoqchi bo'lgan summangizni kiriting.\nМасалан: 5000"
+        payment_received: "✅ Hisobingizdan ${withdrawalCost} so'm yechib olish haqidagi so'rovingiz adminga yetkazildi. Eng qisqa muddatda telefoningizga o'tkaziladi!"
+        not_enough_money: "🚫 Balansingizda mablag' yetarli emas!"
+        error_minimal_withdraw: "🚫 Minimal pul yechish miqdori: ${minimalCost} so'm"
+        error_cost: "🚫 Misolda keltirilgandek, faqatgina sonni o'zini kiritish kerak!"
+        back: ⬅️ Orqaga
+
+  feedback:
+    caption: Fikr va mulohazalaringizni yozib qoldirishingiz mumkin. Biz ularni albatta ko'rib chiqamiz.
+    back: ⬅️ Orqaga
+
+  about:
+    caption: "Ushbu bot yordamida ismlarga rasmlar hamda ringtonlarni osongina qidirib topishingiz mumkin. O'zingiz va yaqinlaringiz ismlarini qidirib ko'ring.\n\nDasturchi: <a href='https://t.me/mohirbey'>Mohirbek Odiljonov</a>"
+    back: ⬅️ Orqaga
+
+admin:
+  home:
+    caption: 🏠 Admin panel
+    ringtones: 🎷 Ringtonlar
+    change_costs: 💸 Moliyani boshqarish
+    payment_channel: 🧮 To'lov kanal
+    partner_channel: 📢 Hamkor kanal
+    publish_ad: 📣 E'lon berish
+    stats: 📊 Statistika
+    exit: 🚪 Chiqish
+
+  ringtones:
+    caption: <b>🎷 Ringtonlar</b> bo'limi uchun material joylash yoki tahrirlash
+    buttons:
+      search: 🔍 Qidirish
+      add: ➕ Qo'shish
+      del: 🚫 O'chirish
+      back: ⬅️ Orqaga
+    
+    add_name:
+      caption: "Ismni kiriting:\n\n<i>Eslatma! Foydalanuvchilar qidirganda oson topishi uchun aniq ism yozilishi zarur!</i>"
+      back: ⬅️ Orqaga
+
+    add_file:
+      caption: "Rington faylini yuboring:\n\n<i>Eslatma! Bu yerda ringtonning asosiy audio fayli mp3 formatda yuboriladi.</i>"
+      ignored: "🙅‍♂️ Faqatgina mp3 formatdagi audio fayl jo'natishingiz kerak!"
+      back: ⬅️ Orqaga
+
+    add_prev:
+      caption: "Oldindan eshitib ko'rish uchun necha sekund kerak:\n\n<i>Eslatma! Sekundni faqatgina son orqali kiriting! 5 sonini kiritsangiz, demak, dastlabki 5 sekund qirqib olib prevyu sifatida eshittiriladi!</i>"
+      back: ⬅️ Orqaga
+
+    accept:
+      caption: "${name} ismi uchun ushbu ringtonni omborga qo'shasizmi?"
+      created: "✅ Rington omborga qo'shildi!"
+      rejected: "🙅‍♂️ Rington qo'shilmadi"
+      yes: ✅ Tasdiqlash
+      no: 🙅‍♂️ Bekor qilish
+      back: ⬅️ Orqaga
+
+  change_costs:
+    caption: "<b>💸 Moliyani boshqarish</b>\n\nHar bir rington uchun: ${ringtoneCost}\nReferal uchun: ${referalCost}\nYechib olish(ruxsat berish): ${isWithdrawable}"
+    change_text: "<b>Narxlarni o'zgartirish uchun buyruqlar:</b>\n\n/setringc - har bir rington narxini o'zgartiradi.\n/setrefc - referal uchun beriladigan summani o'zgartiradi.\n/setew - yechib olishga ruxsat berish yoki bermaslikni o'zgartiradi.\n\n<b>Foydalanish:</b> <code>/setringc 3000</code>"
+    change: ❕ Qanday o'zgartirish
+    back: ⬅️ Orqaga
+    ringtone_cost_changed: "✅ Har bir rington uchun: ${ringtoneCost}"
+    referal_cost_changed: "✅ Referal uchun: ${referalCost}"
+    min_with_cost_changed: "✅ Yechib olish(ruxsat berish): ${isWithdrawable}"
+
+  payment_channel:
+    caption: "<b>To'lovlarni boshqarish uchun bot yopiq kanaldan foydalanadi.</b>\n\n1) Yopiq kanal ochib, unga botni qo‘shib, admin darajasini bering.\n2) Kanalga «salom» deb post yozib, ushbu postni shu yerga «forward» qilib yuboring.\n\nEslatma! Ushbu yopiq kanalga siz va botdan boshqa hech kim qo'shilmasligi shart!\n\nHozirgi kanal: ${channelTitle}"
+    added: ✅ Kanal muvaffaqiyatli qo‘shildi!
+    bot_not_found: 🙅‍♂️ Bot kanalda mavjud emas!
+    not_forwarded: Iltimos, yuqorida aytilganidek xabarni «forward» qilib yuborish kerak!
+    not_channel: Yuborilgan xabar kanaldan olinishi shart!
+    back: ⬅️ Orqaga
+
+  partner_channel:
+    caption: "Hamkor kanal qo'shish uchun undagi ixtiyoriy postni «forward» qilib shu yerga jo'nating!\n\n<i>Eslatma! Hamkorga aylanish uchun bot kanalda adminlik huquqlariga ega bo'lishi kerak!</i>"
+    accepted: ✅ Yangi hamkor kanal qo'shildi!
+    rejected: 🙅‍♂️ Bekor qilindi! Bot kanalda mavjud emas!
+    rejected_contract: "🙅‍♂️ Kanaldan hamkorlik olib tashlandi:"
+    err_forward: 🙅‍♂️ Bekor qilindi! Post «forward» qilinishi shart!
+    del_channel: ❌
+    back: ⬅️ Orqaga
+
+  stats:
+    caption: "👤 Botdagi jami foydalanuvchilar soni: ${userCount}"
+
+  publish_ad:
+    caption: "<i>Reklama posti bo‘yicha cheklov mavjud:\n * Postda faqat bitta media(rasm, video yoki fayl)ga ruxsat beriladi!</i>\n\nQuyida reklama postini kiriting:"
+    agreement: "Reklama posti foydalanuvchilarga yuqoridagi kabi ko‘rinadi. Yuborish jarayonini boshlaysizmi?"
+    started: "Yuborish jarayoni boshlandi ..."
+    ended: "✅ Jarayon yakunlandi! Post foydalanuvchilarga muvaffaqiyatli yetkazildi!"
+    rejected: "🙅‍♂️ Bekor qilindi! Reklama posti hech kimga yuborilmadi! Iltimos, postni tekshirib qayta yuboring!"
+    yes: ✅ Boshlash!
+    no: 🙅‍♂️ Bekor qilish
+    report: "<b>📊 Reklama statistikasi</b>\n\n<b>👤 Umumiy foydalanuvchilar: </b>${userCount}\n<b>❤️‍🔥 Reklama qabul qilganlar: </b>${receiverCount}\n<b>⚠️ Stop bosganlar: </b>${stopperCount}"
+    back: ⬅️ Orqaga
