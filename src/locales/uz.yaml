@@ -1,11 +1,31 @@
 user:
+
+  signup:
+    get_name: "Ism familiyangizni kiriting:"
+    get_phone:
+      caption: "Qastdagi [📞 Mobil raqam] tugmasini bosib telefon raqamingizni yuboring 👇:"
+      phone: 📞 Mobil raqam
+      back: ⬅️ Orqaga
+    get_district: 
+      caption: "Hududingizni tanlang:"
+      back: ⬅️ Orqaga
+    get_region:
+      caption: "Tuman(Shahar)ni tanlang:"
+      back: ⬅️ Orqaga
+    finished: "Tabriklaymiz siz muvaffaqiyatli roʻyhatdan oʻtdingiz✅. Sizga Konkursda qatnashish uchun berilgan ID raqam - <b>"${referalId}"</b>.\n\nSiz Konkursda yutish imkoniyatingizni oshirish uchun qoʻshimcha ID raqam olishni istaysizmi? Unda "🎁Qoʻshimcha imkoniyat" tugmasini bosing!\n\nKonkurs haqida koʻproq maʼlumot olmoqchi boʻlsangiz <b>"🔖Yoʻriqnoma"</b> tugmasini bosing."
+
+  subscription:
+    caption: "Botdan to'liq foydalanish uchun quyidagi kanallarga a'zo bo'ling:"
+    subscribed: "✅ A'zo bo'ldim"
+    back: ⬅️ Orqaga
+
   home:
     caption: 🏠 Asosiy menyu
-    ringtones: 🎷 Ringtonlar
-    images: 🖼 Rasmlar
-    balance: 💳 Balans
-    feedback: 📨 Fikr bildirish
-    about: ℹ️ Bot haqida
+    about_comp: ℹ️ Konkurs haqida
+    guide: 🔖 Yo'riqnoma
+    sponsorship: 🤝 Hamkorlik
+    extra_chance: 🎁 Qo'shimcha imkoniyat
+    stat: 📊 Statistika
 
   balance:
     caption: Hisobingizda ${cost} so'm mavjud.

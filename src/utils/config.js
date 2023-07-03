@@ -101,59 +101,11 @@ function isAdmin(userId){
     return result
 }
 
-function getRingtoneCost(){
-    return Configuration[envName].RINGTONE_COST
-}
-
-function setRingtoneCost(newCost){
-    Configuration[envName].RINGTONE_COST = newCost
-    fs.writeFileSync(
-        configFilePath, JSON.stringify(Configuration)
-    )
-}
-
-function getReferalCost(){
-    return Configuration[envName].REFERAL_COST
-}
-
-function setReferalCost(newCost){
-    Configuration[envName].REFERAL_COST = newCost
-    fs.writeFileSync(
-        configFilePath, JSON.stringify(Configuration)
-    )
-}
-
-function getWithdrawability(){
-    return Configuration[envName].IS_WITHDRAWABLE
-}
-
-function setWithdrawabality(isEnabled){
-    Configuration[envName].IS_WITHDRAWABLE = isEnabled
-    fs.writeFileSync(
-        configFilePath, JSON.stringify(Configuration)
-    )
-}
-
-function getPaymentChannelId(){
-    return Configuration[envName].PAYMENTS_CHANNEL_ID
-}
-
-function setPaymentChannelId(channelId){
-    Configuration[envName].PAYMENTS_CHANNEL_ID = channelId
-    fs.writeFileSync(
-        configFilePath, JSON.stringify(Configuration)
-    )
-}
-
 const config = {
     isProduction: isProduction,
     token: Configuration[envName].BOT_TOKEN,
     owners: Configuration[envName].OWNERS,
     admins: Configuration[envName].ADMINS,
-    channelId: Configuration[envName].CHANNEL_ID,
-    storageChannelId: Configuration[envName].STORAGE_CHANNEL_ID,
-    remoteStorage: Configuration[envName].STORAGE,
-    previewSeconds: Configuration[envName].PREVIEW_SECONDS,
     database: {
         dialect: 'sqlite',
         storage: path.join(__dirname, '..', `/${Configuration[envName].DATABASE_NAME}.db3`)
@@ -166,11 +118,7 @@ const config = {
     addAdmin, getAdmins, removeAdmin,
     addOwner, getOwners,
     isBotAdminInThisChannel,
-    isOwner, isAdmin,
-    getRingtoneCost, setRingtoneCost,
-    getReferalCost, setReferalCost,
-    getWithdrawability, setWithdrawabality,
-    getPaymentChannelId, setPaymentChannelId
+    isOwner, isAdmin
 }
 
 module.exports = config
