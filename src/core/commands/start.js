@@ -18,6 +18,6 @@ module.exports = {
         //     ctx.session.thisUser = user.dataValues;
         // }
 
-        ctx.scene.enter('user-home')
+        ctx.scene.enter('user-signup')
     }
 }

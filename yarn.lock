@@ -86,6 +86,11 @@
   resolved "https://registry.yarnpkg.com/@redis/time-series/-/time-series-1.0.4.tgz#af85eb080f6934580e4d3b58046026b6c2b18717"
   integrity sha512-ThUIgo2U/g7cCuZavucQTQzA9g9JbDDY2f64u3AbAoz/8vE2lt2U37LamDUVChhaDA3IRT9R6VvJwqnUfTJzng==
 
+"@telegraf/session@^2.0.0-beta.6":
+  version "2.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/@telegraf/session/-/session-2.0.0-beta.6.tgz#6d39c851770c910c6a4a2a2dea0f292e7d5ce1c1"
+  integrity sha512-L4UqZDN797JRk2aplalmWW34D8GqpZEHEvfy8NBjylL8KzQFnCNzW+Ajnes090a7vTITB5YM70tgSjpnsr35KA==
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"

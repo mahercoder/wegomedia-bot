@@ -5,9 +5,7 @@ const { User } = Models
 const { helpers } = require('../../../utils')
 
 const callback_data = {
-    ringtones: 'admin.home.ringtones',
-    change_costs: 'admin.home.change_costs',
-    payment_channel: 'admin.home.payment_channel',
+    journal: 'admin.home.journal',
     partner_channel: 'admin.home.partner_channel',
     publish_ad: 'admin.home.publish_ad',
     stats: 'admin.home.stats',
@@ -17,11 +15,7 @@ const callback_data = {
 function makeButtons(ctx){
     return [
         [ 
-            { text: ctx.i18n.t(callback_data.ringtones), callback_data: callback_data.ringtones },
-            { text: ctx.i18n.t(callback_data.change_costs), callback_data: callback_data.change_costs }
-        ],
-        [
-            { text: ctx.i18n.t(callback_data.payment_channel), callback_data: callback_data.payment_channel },
+            { text: ctx.i18n.t(callback_data.journal), callback_data: callback_data.journal },
             { text: ctx.i18n.t(callback_data.partner_channel), callback_data: callback_data.partner_channel }
         ],
         [   
@@ -43,19 +37,9 @@ scene.enter( async ctx => {
 scene.action(/.+/, async ctx => {
     const action = ctx.callbackQuery.data
     switch(action){
-        case callback_data.ringtones: {
+        case callback_data.journal: {
             ctx.deleteMessage()
-            ctx.scene.enter('admin-home-ringtones')
-            break
-        }
-        case callback_data.change_costs: {
-            ctx.deleteMessage()
-            ctx.scene.enter('admin-home-change_costs')
-            break
-        }
-        case callback_data.payment_channel: {
-            ctx.deleteMessage()
-            ctx.scene.enter('admin-home-payment_channel')
+            ctx.scene.enter('admin-home-journal')
             break
         }
         case callback_data.partner_channel: {

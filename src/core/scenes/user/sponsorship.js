@@ -3,19 +3,19 @@ const { BaseScene } = Scenes
 const { helpers } = require('../../../utils')
 
 const callback_data = {
-    back: 'user.about.back'
+    back: 'user.sponsorship.back'
 }
-
+    
 function makeButtons(ctx){
     return [
-        [{ text: ctx.i18n.t(callback_data.back), callback_data: callback_data.back }],
+        [{ text: ctx.i18n.t(callback_data.back), callback_data: callback_data.back }]
     ]
 }
 
-const scene = new BaseScene('user-home-about')
+const scene = new BaseScene('user-home-sponsorship')
 
 scene.enter( async ctx => {
-    const caption = ctx.i18n.t('user.about.caption')
+    const caption = ctx.i18n.t('user.sponsorship.caption')
     const keyboard = helpers.makeInlineKeyboard(makeButtons(ctx))
     ctx.replyWithHTML(caption, { 
         reply_markup: keyboard,

@@ -4,7 +4,7 @@
     "OWNERS": [792684458, 543588222],
     "ADMINS": [792684458, 543588222],
     "PARTNER_CHANNELS_ID": [],
-    "DATABASE_NAME": "rington_bot_dev",
+    "DATABASE_NAME": "wegomedia_bot_dev",
     "DATABASE_DIALECT": "sqlite",
     "REDIS_HOST": "127.0.0.1",
     "REDIS_PORT": 6379

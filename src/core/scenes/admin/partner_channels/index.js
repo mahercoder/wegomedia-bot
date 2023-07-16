@@ -1,16 +1,19 @@
 const { Scenes } = require('telegraf');
 const { BaseScene } = Scenes;
-const { config, helpers } = require('../../../utils');
+const { helpers } = require('../../../../utils');
 
 const callback_data = {
-    del_channel: 'admin.partner_channel.del_channel',
-    back: 'admin.partner_channel.back'
+    district_channels: 'admin.partner_channel.buttons.district_channels',
+    del_channel: 'admin.partner_channel.buttons.del_channel',
+    back: 'admin.partner_channel.buttons.back'
 }
 
 async function makeButtons(ctx){
     let buttons = [];
+    
+    buttons.push([{ text: ctx.i18n.t(callback_data.district_channels), callback_data: callback_data.district_channels }])
 
-    const partnerChannels = config.getPartnerChannels();
+    const partnerChannels = helpers.getChannels()
     
     for(let i=0; i < partnerChannels.length; i++){
         try{
@@ -47,18 +50,18 @@ scene.action(/.+/, async ctx => {
 
     switch(action){
         case callback_data.district_channels: {
-            await ctx.deleteMessage().catch( err => {});
-            ctx.scene.enter('admin-home-partner_channel-district_channels');
-            break;
+            await ctx.deleteMessage().catch()
+            ctx.scene.enter('admin-home-partner_channel-district_channels')
+            break
         }
         case callback_data.del_channel: {
             try {
                 const index = ctx.callbackQuery.data.split('--')[1]
             
-                const channel = await ctx.telegram.getChat(config.getPartnerChannels()[index])
+                const channel = await ctx.telegram.getChat(helpers.getChannels()[index])
                 const url = channel.username ? `https://t.me/${channel.username}` : channel.invite_link
     
-                config.removePartnerChannel(index)
+                helpers.removeChannel(index)
     
                 await ctx.deleteMessage(ctx.session.enteredMessage.message_id)
     
@@ -77,8 +80,8 @@ scene.action(/.+/, async ctx => {
             break
         }
         case callback_data.back: {
-            await ctx.deleteMessage().catch( err => {});
-            ctx.scene.enter('admin-home');
+            await ctx.deleteMessage().catch()
+            ctx.scene.enter('admin-home')
             break
         }
     }
@@ -88,33 +91,39 @@ scene.on('message', async ctx => {
 
     try{
         if(!ctx.message.forward_from_chat){
-            await ctx.deleteMessage().catch( err => {})
+            await ctx.deleteMessage().catch()
             await ctx.reply(ctx.i18n.t('admin.partner_channel.err_forward'))
-            await ctx.deleteMessage(ctx.session.enteredMessage.message_id).catch( err => {})
+            await ctx.deleteMessage(ctx.session.enteredMessage.message_id).catch()
             ctx.scene.reenter()
         } else {
-            if(await config.isBotAdminInThisChannel(ctx, ctx.message.forward_from_chat.id)){
-                await ctx.deleteMessage(ctx.session.enteredMessage.message_id).catch( err => {})
-                await ctx.deleteMessage().catch( err => {})
+            if(await helpers.isBotAdminInThisChannel(ctx, ctx.message.forward_from_chat.id)){
+                await ctx.deleteMessage(ctx.session.enteredMessage.message_id).catch()
+                await ctx.deleteMessage().catch()
                 
-                config.addPartnerChannel(ctx.message.forward_from_chat.id)
+                helpers.addChannel(ctx.message.forward_from_chat.id)
                 
                 await ctx.reply(ctx.i18n.t('admin.partner_channel.accepted'))
                 ctx.scene.reenter()
             } else {
-                await ctx.deleteMessage().catch( err => {})
+                await ctx.deleteMessage().catch()
                 await ctx.reply(ctx.i18n.t('admin.partner_channel.rejected'))
-                await ctx.deleteMessage(ctx.session.enteredMessage.message_id).catch( err => {})
+                await ctx.deleteMessage(ctx.session.enteredMessage.message_id).catch()
                 ctx.scene.reenter()
             }
         }
     }catch(err){
         console.log(err)
-        await ctx.deleteMessage().catch( err => {})
+        await ctx.deleteMessage().catch()
         await ctx.reply(ctx.i18n.t('admin.partner_channel.err_forward'))
         await ctx.deleteMessage(ctx.session.enteredMessage.message_id)
         ctx.scene.reenter()
     }
 })
 
-module.exports = scene
+module.exports = [
+    scene,
+    require('./district_channels'),
+    require('./selected_district'),
+    require('./region_channels'),
+    require('./selected_region')
+]

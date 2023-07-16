@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         phone_number: {
             type: DataTypes.STRING
         },
-        order_number: {
+        district: {
+            type: DataTypes.INTEGER
+        },
+        region: {
             type: DataTypes.INTEGER
         },
         language_code: {
@@ -24,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     },{
         tableName: 'users',
         freezeTableName: true
-    });
+    })
 
     /*******   ASSOCIATION-METHODS    *******/
     // User.associate = function(models) {

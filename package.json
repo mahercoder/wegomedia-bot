@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": "true",
   "dependencies": {
+    "@telegraf/session": "^2.0.0-beta.6",
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
     "redis": "^4.6.7",
