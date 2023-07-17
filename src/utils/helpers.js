@@ -112,7 +112,7 @@ function isThere(arr, element){
 }
 
 function getChannels(){
-  return Constants.partnerChannels.general;
+  return Constants.partnerChannels.general
 }
 
 function addChannel(chat_id){
@@ -137,7 +137,7 @@ function removeDistrictChannel(district_id, index){
 }
 
 function getDistrictChannels(district_id){
-  return Constants.partnerChannels.byDistrict[district_id].channel_ids;
+  return Constants.partnerChannels.byDistrict[district_id].channel_ids
 }
 
 function addRegionChannel(district_id, region_id, chat_id){
@@ -151,7 +151,7 @@ function removeRegionChannel(district_id, region_id, index){
 }
 
 function getRegionChannels(district_id, region_id){
-  return Constants.partnerChannels.byRegion[district_id, region_id].channel_ids;
+  return Constants.partnerChannels.byRegion[district_id][region_id].channel_ids
 }
 
 function getDistricts(){
@@ -180,6 +180,27 @@ async function isBotAdminInThisChannel(ctx, channelId){
   }
 
   return false
+}
+
+// Hamkor kanallarning barchasiga obuna bo'lganligini tekshirish
+async function isSubscribed(ctx, partnerChannels=[]){
+  let result = true
+ 
+  for(let i=0; i < partnerChannels.length; i++){
+       try {
+            const user = await ctx.telegram.getChatMember(partnerChannels[i], ctx.from.id)
+
+            if(!user || user.status == 'left' || user.status == 'kicked' || user.status == 'restricted'){
+                 result = false;
+            }
+       } catch(err) {
+            if(err.code == 400){
+                 result = false
+            }
+       }
+  }
+
+  return result
 }
 
 async function makeUsers(Id, User, districtId, regionId){
@@ -269,7 +290,7 @@ module.exports = {
   getChannels, addChannel, removeChannel,
   getDistrictChannels, addDistrictChannel, removeDistrictChannel,
   getRegionChannels, addRegionChannel, removeRegionChannel,
-  isBotAdminInThisChannel,
+  isBotAdminInThisChannel, isSubscribed,
   getDistricts, getRegions,
   makeUsers, makeUserList
 }

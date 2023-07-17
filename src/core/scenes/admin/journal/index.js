@@ -2,9 +2,10 @@ const fs = require('fs')
 const path = require('path')
 const { Scenes } = require('telegraf')
 const { BaseScene } = Scenes
-const { helpers } = require('../../../../utils')
+const { helpers, constants } = require('../../../../utils')
 const { Models } = require('../../../../models')
 const { Id, User } = Models
+const { districts } = constants
 
 const callback_data = {
     item: 'admin.journal.item',
@@ -13,10 +14,17 @@ const callback_data = {
 }
 
 function makeButtons(ctx){
-    return [
-        [{ text: ctx.i18n.t(callback_data.get_all), callback_data: callback_data.get_all }],
-        [{ text: ctx.i18n.t(callback_data.back), callback_data: callback_data.back } ]
-    ]
+    let buttons = []
+
+    for(let i=0; i < districts.length; i++){
+        buttons.push({ text: districts[i].name, callback_data: `${callback_data.item}--${i}`})
+    }
+
+    buttons = helpers.matrixify(buttons, 2)
+    buttons.push([{ text: ctx.i18n.t(callback_data.get_all), callback_data: callback_data.get_all }])
+    buttons.push([{ text: ctx.i18n.t(callback_data.back), callback_data: callback_data.back } ])
+
+    return buttons
 }
 
 const scene = new BaseScene('admin-home-journal')
@@ -32,6 +40,7 @@ scene.action(/.+/, async ctx => {
     switch(action){
         case callback_data.item: {
             const districtId = ctx.callbackQuery.data.split('--')[1]
+            ctx.session.districtId = parseInt(districtId)
             ctx.deleteMessage().catch()
             ctx.scene.enter('admin-home-journal-get_by_district')
             break
@@ -40,9 +49,13 @@ scene.action(/.+/, async ctx => {
             await ctx.deleteMessage().catch()
             const filePath = path.join(__dirname, '../../../..', '/cache/userList.xlsx')
             const userList = await helpers.makeUsers(Id, User)
-            await helpers.makeUserList(userList, filePath)
-            await ctx.telegram.sendDocument(ctx.from.id, { source: filePath })
-            fs.unlinkSync(filePath)
+            if(userList.length > 0){
+                await helpers.makeUserList(userList, filePath)
+                await ctx.telegram.sendDocument(ctx.from.id, { source: filePath })
+                fs.unlinkSync(filePath)
+            } else {
+                await ctx.reply("Hech qanday foydalanuvchilar mavjud emas!")
+            }
             ctx.scene.reenter()
             break
         }
@@ -55,5 +68,7 @@ scene.action(/.+/, async ctx => {
 })
 
 module.exports = [
-    scene
+    scene,
+    require('./getByDistrict'),
+    require('./getByRegion')
 ]

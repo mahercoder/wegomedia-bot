@@ -1,7 +1,11 @@
+const { config } = require('../../utils')
+
 module.exports = {
     name: `admin`,
     action:
     async function(ctx){
-        ctx.scene.enter('admin-home');
+        if(config.isAdmin(ctx.from.id)){
+            ctx.scene.enter('admin-home')
+        }
     }
 }

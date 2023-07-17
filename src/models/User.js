@@ -38,5 +38,5 @@ module.exports = (sequelize, DataTypes) => {
     //     this.belongsToMany(models.Game, 'game_user');
     // }
 
-    return User;
+    return User
 }

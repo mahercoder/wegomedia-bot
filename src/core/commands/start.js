@@ -16,45 +16,22 @@ module.exports = {
             }
         })
 
-        if(created){
+        if(created || !savedUser.phone_number){
             try{
                 const text = ctx.message.text
-    
                 const referalId = helpers.extractNumberFromStart(text)
                 
-                if(referalId != null){
-                    const thanksForNewID = ctx.i18n.t('user.extra_chance.my_ids.newID')
-                    const thanksForNewUser = ctx.i18n.t('user.extra_chance.my_ids.newUser')
-                    
+                if(referalId != null){                    
                     ctx.session.referal = referalId
-
-                    const referrer = await User.findOne({ where: { id: referalId }})
-                    const referals = helpers.strToArr(referrer.referals)
-                    referals.push(savedUser.id)
-                    referrer.referals = helpers.arrToStr(referals)
-                    await referrer.save()
-    
-                    await ctx.telegram.sendMessage(referalId, thanksForNewUser, {
-                        parse_mode: 'HTML'
-                    })
-                    
-                    if(referrer.referals.length % 5 == 0){
-                        const newId = await Id.create({
-                            userId: ctx.from.id
-                        })
-
-                        await ctx.telegram.sendMessage(referalId, thanksForNewID, {
-                            parse_mode: 'HTML'
-                        })
-                    }
                 }
+
             } catch(err){
                 console.log(err)
             }
 
             ctx.scene.enter('user-signup')
         } else {
-            ctx.scene.enter('user-home')
+            ctx.scene.enter('user-subscription')
         }
     }
 }

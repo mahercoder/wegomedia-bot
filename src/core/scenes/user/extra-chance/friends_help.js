@@ -9,9 +9,10 @@ const callback_data = {
 
 function makeButtons(ctx){
     return [
-        [{ 
+        [{
             text: ctx.i18n.t(callback_data.send_friends), 
             switch_inline_query_chosen_chat: {
+                query: 'referal',
                 allow_user_chats: true,
                 allow_bot_chats: false,
                 allow_group_chats: true,

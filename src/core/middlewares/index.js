@@ -2,6 +2,7 @@ const report = require('./report')
 const i18n = require('./i18n')
 const stage = require('./stage')
 const session  = require('./session')
+const referalHandler = require('./referal-handler')
 // const isAuth = require('./isAuth')
 
 module.exports = async bot => {
@@ -10,4 +11,5 @@ module.exports = async bot => {
     bot.use(stage)  
     // bot.use(isAuth)
     bot.catch(report)
+    bot.inlineQuery('referal', referalHandler)
 }

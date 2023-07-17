@@ -2,15 +2,23 @@ const { Scenes } = require('telegraf')
 const { BaseScene } = Scenes
 const { Models } = require('../../../../models')
 const { User, Id } = Models
+const { helpers } = require('../../../../utils')
 
 const scene = new BaseScene('user-signup-finished')
 
 scene.enter( async ctx => {
-    const newId = await Id.create({
-        userId: ctx.from.id
-    })
+    let newId
+    const thanksForNewID = ctx.i18n.t('user.extra_chance.my_ids.newID')
+    const thanksForNewUser = ctx.i18n.t('user.extra_chance.my_ids.newUser')
 
     const user = await User.findOne({ where: { id: ctx.from.id }})
+
+    if(!user.phone_number){
+        newId = await Id.create({
+            userId: ctx.from.id
+        })
+    }
+
     user.fullname = ctx.session.signup_user.fullname
     user.phone_number = ctx.session.signup_user.phone
     user.district = ctx.session.signup_user.district
@@ -28,7 +36,31 @@ scene.enter( async ctx => {
         disable_web_page_preview: true 
     })
 
-    ctx.scene.enter('user-home')
+    const referalId = ctx.session.referal
+
+    if(referalId != null){
+        const referrer = await User.findOne({ where: { id: referalId }})
+        const referals = helpers.strToArr(referrer.referals)
+        referals.push(ctx.from.id)
+        referrer.referals = helpers.arrToStr(referals)
+        await referrer.save()
+    
+        await ctx.telegram.sendMessage(referalId, thanksForNewUser, {
+            parse_mode: 'HTML'
+        })
+        
+        if(helpers.strToArr(referrer.referals).length % 2 == 0){
+            await Id.create({
+                userId: referalId
+            })
+    
+            await ctx.telegram.sendMessage(referalId, thanksForNewID, {
+                parse_mode: 'HTML'
+            })
+        }
+    }
+
+    ctx.scene.enter('user-subscription')
 })
 
 module.exports = scene
