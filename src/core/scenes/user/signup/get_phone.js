@@ -28,8 +28,15 @@ scene.enter( async ctx => {
 })
 
 scene.on('contact', async ctx => {
-    ctx.session.signup_user.phone = ctx.message.contact.phone_number
-    
+    let phone = ctx.message.contact.phone_number
+
+    // Jo'natilgan raqamda "+" mavjud bo'lmasa:
+    if(phone.split('+').length == 1){
+        phone = '+' + phone
+    }
+
+    ctx.session.signup_user.phone = phone
+
     ctx.deleteMessage().catch()
     ctx.deleteMessage(ctx.session.currentSceneMessage.message_id).catch()
 

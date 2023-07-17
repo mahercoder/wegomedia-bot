@@ -6,7 +6,7 @@ const callback_data = {
     send_friends: 'user.extra_chance.friends_help.send_friends',
     back: 'user.extra_chance.friends_help.back'
 }
-    
+
 function makeButtons(ctx){
     return [
         [{ 

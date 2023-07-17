@@ -10,15 +10,15 @@ scene.enter( async ctx => {
         userId: ctx.from.id
     })
 
-    await User.create({
-        id: ctx.from.id,
-        fullname: ctx.session.signup_user.fullname,
-        phone_number: ctx.session.signup_user.phone,
-        district: ctx.session.signup_user.district,
-        region: ctx.session.signup_user.region,
-        username: ctx.from.username,
-        language_code: ctx.from.language_code
-    })
+    const user = await User.findOne({ where: { id: ctx.from.id }})
+    user.fullname = ctx.session.signup_user.fullname
+    user.phone_number = ctx.session.signup_user.phone
+    user.district = ctx.session.signup_user.district
+    user.region = ctx.session.signup_user.region
+    user.username = ctx.session.signup_user.username
+    user.language_code = ctx.session.signup_user.language_code
+
+    await user.save()
 
     const caption = ctx.i18n.t('user.signup.finished', {
         givenId: newId.id

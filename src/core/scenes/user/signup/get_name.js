@@ -24,7 +24,7 @@ scene.enter( async ctx => {
 })
 
 scene.on('text', async ctx => {
-    ctx.session.signup_user.fullname = ctx.from.first_name
+    ctx.session.signup_user.fullname = ctx.message.text
     
     ctx.deleteMessage().catch()
     ctx.deleteMessage(ctx.session.currentSceneMessage.message_id).catch()

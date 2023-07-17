@@ -1,6 +1,8 @@
 const { Scenes } = require('telegraf')
 const { BaseScene } = Scenes
 const { helpers } = require('../../../utils')
+const { Models } = require('../../../models')
+const { User } = Models
 
 const callback_data = {
     about_comp: 'user.home.about_comp',
@@ -56,8 +58,11 @@ scene.action(/.+/, async ctx => {
             break
         }
         case callback_data.stat: {
-            ctx.deleteMessage().catch()
-            ctx.scene.enter('user-home-stat')
+            const userCount = await User.count()
+            await ctx.deleteMessage()
+            const userCountCaption = ctx.i18n.t('admin.stats.caption', { userCount })
+            await ctx.replyWithHTML(userCountCaption)
+            await ctx.scene.reenter()
             break
         }
     }

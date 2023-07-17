@@ -3,8 +3,9 @@ const path = require('path')
 const axios = require('axios')
 const XLSX = require('xlsx')
 const config = require('./config')
-const Constants = require('./constants.json');
-
+const Constants = require('./constants.json')
+// const { Models } = require('../models')
+// const { Id, User } = Models
 
 /**
  * ButtonObject -> { text: 'some text', callback_data: 'some_text' }
@@ -59,6 +60,17 @@ function strToArr(str) {
       const arr = str.split(',');
       return arr.map(Number);
     }
+}
+
+function getGMT5() {
+  // Convert date string to Date object
+  const dateObj = new Date();
+  
+  // Add 5 hours to the date
+  dateObj.setHours(dateObj.getHours() + 5);
+  // dateObj.setHours(dateObj.getHours());
+
+  return dateObj
 }
 
 function extractNumberFromStart(text) {
@@ -170,30 +182,94 @@ async function isBotAdminInThisChannel(ctx, channelId){
   return false
 }
 
-function writeId(){
-  let regions = Constants.partnerChannels.byRegion
-  for(let i=0; i < regions.length; i++){
-    for(let n=0; n < regions[i].length; n++){
-      regions[i][n].id = n
+async function makeUsers(Id, User, districtId, regionId){
+  let query = {}
+  let users = []
+
+  if(districtId){
+    if(regionId){
+      // Ushbu tuman/shahar foydalanuvchilari ma'lumotlari
+      query = { district: districtId, region: regionId }
+    } else {
+      // Ushbu viloyat foydalanuvchilari ma'lumotlari
+      query = { district: districtId }
     }
+  } else {
+    // Barcha foydalanuvchilar ma'lumotlari
+    query = {}
   }
 
-  Constants.partnerChannels.byRegion = regions
+  const dbUsers = await User.findAll({ where: query})
+  
+  for(let i=0; i < dbUsers.length; i++){
+    let ids = []
+    const userIds = await Id.findAll({ where: { userId: dbUsers[i].id } })
+    
+    for(let n=0; n < userIds.length; n++){
+      ids.push(userIds[n].id)
+    }
+    
+    users.push({
+      fullname: dbUsers[i].fullname,
+      phone: dbUsers[i].phone_number,
+      ids: ids
+    })
+  }
 
-  fs.writeFileSync(path.join(__dirname, '/constants.json'), JSON.stringify(Constants))
+  console.log(users)
+
+  return users
 }
 
-writeId()
+// users => [{fullname, phone, ids}, ...]
+async function makeUserList(users, filePath){
+  // Excel faylni yaratish
+  const workbook = XLSX.utils.book_new()
+  
+  // Excel faylda ishlatiladigan ma'lumotlar massivini yaratish
+  const worksheetData = [];
+  worksheetData.push(['Ism', 'Tel', 'ID']);
+
+  users.forEach((user) => {
+    worksheetData.push([user.fullname, user.phone, arrToStr(user.ids)]);
+  });
+
+  // Worksheet yaratish
+  const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+  // Workbookga worksheetni qo'shish
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Ro'yxat");
+
+  // Faylni yaratish
+  XLSX.writeFile(workbook, filePath); //'votes.xlsx'
+}
+
+// function writeId(){
+//   let regions = Constants.partnerChannels.byRegion
+//   for(let i=0; i < regions.length; i++){
+//     for(let n=0; n < regions[i].length; n++){
+//       regions[i][n].id = n
+//     }
+//   }
+
+//   Constants.partnerChannels.byRegion = regions
+
+//   fs.writeFileSync(path.join(__dirname, '/constants.json'), JSON.stringify(Constants))
+// }
+
+// writeId()
 
 module.exports = {
   makeInlineKeyboard,
   matrixify,
   getRandomNumber,
   strToArr, arrToStr, isThere,
+  getGMT5,
   extractNumberFromStart, extractNumberFromCommand,
   getChannels, addChannel, removeChannel,
   getDistrictChannels, addDistrictChannel, removeDistrictChannel,
   getRegionChannels, addRegionChannel, removeRegionChannel,
   isBotAdminInThisChannel,
-  getDistricts, getRegions
+  getDistricts, getRegions,
+  makeUsers, makeUserList
 }

@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         phone_number: {
             type: DataTypes.STRING
         },
+        referals: {
+            type: DataTypes.STRING,
+            defaultValueL: ''
+        },
         district: {
             type: DataTypes.INTEGER
         },

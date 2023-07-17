@@ -1,6 +1,8 @@
 const { Scenes } = require('telegraf')
 const { BaseScene } = Scenes
 const { helpers } = require('../../../../utils')
+const { Models } = require('../../../../models')
+const { Id } = Models
 
 const callback_data = {
     friends_help_btn: 'user.extra_chance.my_ids.friends_help_btn',
@@ -20,7 +22,13 @@ function makeButtons(ctx){
 const scene = new BaseScene('user-home-extra_chance-my_ids')
 
 scene.enter( async ctx => {
-    const userIds = [293, 296, 315, 323]
+    let userIds = []
+    const ids = await Id.findAll({ where: { userId: ctx.from.id } })
+
+    for(let i=0; i < ids.length; i++){
+        userIds.push(ids[i].id)
+    }
+
     let myIds = '\n'
     
     for(let i=0; i < userIds.length; i++){
