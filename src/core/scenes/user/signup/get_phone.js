@@ -30,17 +30,31 @@ scene.enter( async ctx => {
 scene.on('contact', async ctx => {
     let phone = ctx.message.contact.phone_number
 
-    // Jo'natilgan raqamda "+" mavjud bo'lmasa:
-    if(phone.split('+').length == 1){
-        phone = '+' + phone
+    if(ctx.message.contact.user_id === ctx.from.id){
+        // Jo'natilgan raqamda "+" mavjud bo'lmasa:
+        if(phone.split('+').length == 1){
+            phone = '+' + phone
+        }
+
+        if(phone.startsWith('+998', 0)){
+            ctx.session.signup_user.phone = phone
+
+            ctx.deleteMessage().catch()
+            ctx.deleteMessage(ctx.session.currentSceneMessage.message_id).catch()
+
+            ctx.scene.enter('user-signup-get_district')
+        } else {
+            await ctx.deleteMessage()
+            await ctx.deleteMessage(ctx.session.currentSceneMessage.message_id).catch()
+            await ctx.reply("Kechirasiz, botdan faqat +998 bilan boshlanuvchi raqamlar foydala oladi!")
+            await ctx.scene.reenter()
+        }
+    } else {
+        await ctx.deleteMessage()
+        await ctx.deleteMessage(ctx.session.currentSceneMessage.message_id).catch()
+        await ctx.reply("Kechirasiz, telegram raqamingizni yuboring.")
+        await ctx.scene.reenter()
     }
-
-    ctx.session.signup_user.phone = phone
-
-    ctx.deleteMessage().catch()
-    ctx.deleteMessage(ctx.session.currentSceneMessage.message_id).catch()
-
-    ctx.scene.enter('user-signup-get_district')
 })
 
 module.exports = scene

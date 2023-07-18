@@ -19,7 +19,6 @@ scene.enter( async ctx => {
         })
     }
 
-    user.fullname = ctx.session.signup_user.fullname
     user.phone_number = ctx.session.signup_user.phone
     user.district = ctx.session.signup_user.district
     user.region = ctx.session.signup_user.region
@@ -49,7 +48,7 @@ scene.enter( async ctx => {
             parse_mode: 'HTML'
         })
         
-        if(helpers.strToArr(referrer.referals).length % 2 == 0){
+        if(helpers.strToArr(referrer.referals).length % 5 == 0){
             await Id.create({
                 userId: referalId
             })

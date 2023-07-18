@@ -5,12 +5,11 @@ const scene = new BaseScene('user-signup')
 
 scene.enter( async ctx => {
     ctx.session.signup_user = {}
-    ctx.scene.enter('user-signup-get_name')
+    ctx.scene.enter('user-signup-get_phone')
 })
 
 module.exports = [
     scene,
-    require('./get_name'),
     require('./get_phone'),
     require('./get_district'),
     require('./get_region'),

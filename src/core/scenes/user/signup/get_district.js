@@ -46,7 +46,7 @@ scene.action(/.+/, async ctx => {
         }
         case callback_data.back: {
             ctx.deleteMessage(ctx.session.currentSceneMessage.message_id).catch()
-            ctx.scene.enter('user-signup-get_name')
+            ctx.scene.enter('user-signup-get_phone')
             break
         }
     }
