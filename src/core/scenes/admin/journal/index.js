@@ -47,7 +47,7 @@ scene.action(/.+/, async ctx => {
         }
         case callback_data.get_all: {
             await ctx.deleteMessage().catch()
-            const filePath = path.join(__dirname, '../../../..', '/cache/userList.xlsx')
+            const filePath = path.join(__dirname, '../../../..', '/temp/userList.xlsx')
             const userList = await helpers.makeUsers(Id, User)
             if(userList.length > 0){
                 await helpers.makeUserList(userList, filePath)

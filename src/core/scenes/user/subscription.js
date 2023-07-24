@@ -42,6 +42,37 @@ async function makeButtons(ctx){
     return buttons;
 }
 
+async function ifReferal(ctx){
+    const referalId = ctx.session.referal
+
+    if(referalId != null){
+        const thanksForNewID = ctx.i18n.t('user.extra_chance.my_ids.newID')
+        const thanksForNewUser = ctx.i18n.t('user.extra_chance.my_ids.newUser')
+        
+        const referrer = await User.findOne({ where: { id: referalId }})
+        const referals = helpers.strToArr(referrer.referals)
+        referals.push(ctx.from.id)
+        referrer.referals = helpers.arrToStr(referals)
+        await referrer.save()
+    
+        await ctx.telegram.sendMessage(referalId, thanksForNewUser, {
+            parse_mode: 'HTML'
+        })
+        
+        if(helpers.strToArr(referrer.referals).length % 5 == 0){
+            await Id.create({
+                userId: referalId
+            })
+    
+            await ctx.telegram.sendMessage(referalId, thanksForNewID, {
+                parse_mode: 'HTML'
+            })
+        }
+    }
+
+    ctx.session.referal = null;
+}
+
 const scene = new BaseScene('user-subscription')
 
 scene.enter( async ctx => {
@@ -62,9 +93,11 @@ scene.enter( async ctx => {
             const keyboard = helpers.makeInlineKeyboard(await makeButtons(ctx))
             ctx.session.enteredMessage = await ctx.replyWithHTML(caption, { reply_markup: keyboard })
         } else {
+            await ifReferal(ctx)
             ctx.scene.enter('user-home')
         }
     } else {
+        await ifReferal(ctx)
         ctx.scene.enter('user-home')
     }
 })
@@ -89,6 +122,7 @@ scene.action(/.+/, async ctx => {
             const isSubscribed = await helpers.isSubscribed(ctx, partnerChannels);
 
             if(isSubscribed){
+                await ifReferal(ctx)
                 ctx.scene.enter('user-home')
             } else {
                 ctx.scene.reenter()
