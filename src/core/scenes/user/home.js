@@ -67,12 +67,15 @@ async ctx => {
             break
         }
         case callback_data.stat: {
-            const userCount = await User.count()
             await ctx.deleteMessage().catch()
             await ctx.deleteMessage(ctx.session.currentSceneMessage.message_id).catch()
-            const userCountCaption = ctx.i18n.t('admin.stats.caption', { userCount })
-            await ctx.replyWithHTML(userCountCaption)
-            await ctx.scene.reenter()
+            ctx.scene.enter('user-home-stat')
+            // const userCount = await User.count()
+            // await ctx.deleteMessage().catch()
+            // await ctx.deleteMessage(ctx.session.currentSceneMessage.message_id).catch()
+            // const userCountCaption = ctx.i18n.t('admin.stats.caption', { userCount })
+            // await ctx.replyWithHTML(userCountCaption)
+            // await ctx.scene.reenter()
             break
         }
     }

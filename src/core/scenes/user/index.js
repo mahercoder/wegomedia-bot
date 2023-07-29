@@ -5,5 +5,6 @@ module.exports = [
     require('./about_comp'),
     require('./guide'),
     require('./sponsorship'),
-    ...require('./extra-chance')
+    ...require('./extra-chance'),
+    ...require('./stat'),
 ]

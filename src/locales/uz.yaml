@@ -60,6 +60,14 @@ user:
       newUser: "<b>🎉 Do'stingiz siz bergan havola orqali ro'yxatdan o'tdi!</b>"
       newID: "<b>🎉 Yangi ID 🆔 muborak!</b>\n5 ta do'stingizni taklif qilganingiz uchun sizga yangi ID berildi! Yana ham ko'proq do'stingizni taklif qilib konkursda g'olib bo'ling!"
       back: ⬅️ Orqaga
+    
+  stat:
+    caption: Bot a'zolari soni ${userCount} ta
+    rating_caption: "<b>🏆 TOP 10ta eng ko'p referalga ega foydalanuvchilar:</b>\n\n"
+    update: ♻️ Yangilash
+    rating: 🏆 Reyting
+    back: ⬅️ Orqaga
+
 
 admin:
   home:
