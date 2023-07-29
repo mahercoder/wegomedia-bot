@@ -94,11 +94,19 @@ scene.enter( async ctx => {
             ctx.session.enteredMessage = await ctx.replyWithHTML(caption, { reply_markup: keyboard })
         } else {
             await ifReferal(ctx)
-            ctx.scene.enter('user-home')
+            if(ctx.session.givenScene){
+                ctx.scene.enter(ctx.session.givenScene)
+            } else {
+                ctx.scene.enter('user-home')
+            }
         }
     } else {
         await ifReferal(ctx)
-        ctx.scene.enter('user-home')
+        if(ctx.session.givenScene){
+            ctx.scene.enter(ctx.session.givenScene)
+        } else {
+            ctx.scene.enter('user-home')
+        }
     }
 })
 
@@ -123,7 +131,11 @@ scene.action(/.+/, async ctx => {
 
             if(isSubscribed){
                 await ifReferal(ctx)
-                ctx.scene.enter('user-home')
+                if(ctx.session.givenScene){
+                    ctx.scene.enter(ctx.session.givenScene)
+                } else {
+                    ctx.scene.enter('user-home')
+                }
             } else {
                 ctx.scene.reenter()
             }

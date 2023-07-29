@@ -21,10 +21,12 @@ const scene = new BaseScene('user-home-extra_chance')
 scene.enter( async ctx => {
     const caption = ctx.i18n.t('user.extra_chance.caption')
     const keyboard = helpers.makeInlineKeyboard(makeButtons(ctx))
-    ctx.replyWithHTML(caption, { 
+    await ctx.replyWithHTML(caption, { 
         reply_markup: keyboard,
         disable_web_page_preview: true 
     })
+
+    ctx.session.givenScene = false
 })
 
 scene.action(/.+/, async ctx => {

@@ -63,7 +63,8 @@ async ctx => {
         case callback_data.extra_chance: {
             await ctx.deleteMessage().catch()
             await ctx.deleteMessage(ctx.session.currentSceneMessage.message_id).catch()
-            ctx.scene.enter('user-home-extra_chance')
+            ctx.session.givenScene = 'user-home-extra_chance'
+            ctx.scene.enter('user-subscription')
             break
         }
         case callback_data.stat: {
