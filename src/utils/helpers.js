@@ -3,9 +3,20 @@ const path = require('path')
 const axios = require('axios')
 const XLSX = require('xlsx')
 const config = require('./config')
-const Constants = require('./constants.json')
+const Constants = require('./constants.json');
 // const { Models } = require('../models')
 // const { Id, User } = Models
+
+(()=> {
+  const folderPath = path.join(__dirname, '../temp')
+  if (!fs.existsSync(folderPath)) {
+    try {
+      fs.mkdirSync(folderPath);
+    } catch (err) {
+      console.error('Papka yaratishda xatolik:', err);
+    }
+  }
+})();
 
 /**
  * ButtonObject -> { text: 'some text', callback_data: 'some_text' }
